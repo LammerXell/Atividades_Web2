@@ -25,6 +25,21 @@ class Book extends Model
     {
         return $this->belongsTo(Publisher::class);
     }
+    public function books()
+{
+    return $this->belongsToMany(Book::class, 'borrowings')
+                ->withPivot('borrowed_at', 'returned_at')
+                ->withTimestamps();
+}
+
+public function users()
+{
+    return $this->belongsToMany(User::class, 'borrowings')
+                ->withPivot('borrowed_at', 'returned_at')
+                ->withTimestamps();
+}
+
+
 
 }
 
