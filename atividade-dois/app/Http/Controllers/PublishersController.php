@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Publisher;
 use Illuminate\Http\Request;
 
 class PublishersController extends Controller
@@ -11,7 +12,8 @@ class PublishersController extends Controller
      */
     public function index()
     {
-        //
+        $publishers = Publisher::all();
+        return view('publishers.index', compact('publishers'));
     }
 
     /**
@@ -19,7 +21,7 @@ class PublishersController extends Controller
      */
     public function create()
     {
-        //
+        return view('publishers.create');
     }
 
     /**
@@ -27,7 +29,12 @@ class PublishersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name'=>'required|string|unique:publishers|max:255'], [
+            'name.required' => 'O nome do editora é obrigatório.',
+            'name.string' => 'O nome da editora deve ser um texto.',
+        ]);
+        Publisher::create($request->all());
+        return redirect()->route('publishers.index')->with('success', 'Editora criada com sucesso.');
     }
 
     /**
@@ -35,7 +42,7 @@ class PublishersController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('publishers.show', compact('publisher'));
     }
 
     /**
@@ -43,22 +50,29 @@ class PublishersController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('publishers.edit', compact ('publisher'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Publisher $publisher)
     {
-        //
+        $request->validate(['name'=>'required|string|unique:publishers|max:255'], [
+            'name.required' => 'O nome da editora é obrigatório.',
+            'name.string' => 'O nome da editora deve ser um texto.',
+        ]);
+        
+        $publisher->update($request->all());
+        return redirect()->route('publishers.index')->with('success', 'Editora atualizada com sucesso.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Publisher $publisher)
     {
-        //
+        $publisher->delete();
+        return redirect()->route('publishers.index')->with('success', 'Editora excluída com sucesso.');
     }
 }
