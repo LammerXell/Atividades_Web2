@@ -21,34 +21,30 @@ class AuthorsController extends Controller
      */
     public function create()
     {
-        return view('author.create');
+        return view('authors.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    // Armazena uma nova categoria no banco de dados
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|unique:authors|max:255', 
-        ], [
-            'name.required' => 'O nome do autor é obrigatório.', 
-            'name.string' => 'O nome do autor deve ser um texto.',
-            // ... (Mensagens de outras regras de validação)
+            'name' => 'required|string|unique:authors|max:255',
         ]);
-        $author = new Author;
-        $author ->name = $request->name;
-        $author ->save();
-        return view('authors.index')->with('success', 'Autor criado com sucesso.');
 
+        Author::create($request->all());
+
+        return redirect()->route('authors.index')->with('success', 'Categoria criada com sucesso.');
     }
-
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        return view('author.show', compact('author'));
+
+        return view('authors.show', compact('author'));
     }
 
     /**
@@ -56,7 +52,7 @@ class AuthorsController extends Controller
      */
     public function edit(string $id)
     {
-        return view('author.edit', compact('author'));
+        return view('authors.edit', compact('author'));
     }
 
     /**
@@ -64,12 +60,12 @@ class AuthorsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $author = Author::find($id);
+        $authors = Author::find($id);
 
         $request->validate([
             'name' => 'required|string|unique:authors,name,' . $author->id . '|max:255',
         ]);
-        $author->update($request->all());
+        $authors->update($request->all());
 
         return redirect()->route('authors.index')->with('success', 'Autor atualizado com sucesso.');
     }
@@ -79,7 +75,7 @@ class AuthorsController extends Controller
      */
     public function destroy(Author $author)
     {
-        $author->delete();
+        $authors->delete();
 
         return redirect()->route('authors.index')->with('success', 'Autor excluído com sucesso.');
     }

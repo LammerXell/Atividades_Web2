@@ -42,7 +42,7 @@ class PublishersController extends Controller
      */
     public function show(string $id)
     {
-        return view('publishers.show', compact('publisher'));
+        return view('publishers.show', compact('publishers'));
     }
 
     /**

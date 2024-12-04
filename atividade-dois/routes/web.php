@@ -15,7 +15,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('categories', CategoryController::class);
-Route::resource('author', AuthorsController::class);
+Route::resource('authors', AuthorsController::class);
 Route::resource('publishers', PublishersController::class);
 
 // Rotas para criação de livros

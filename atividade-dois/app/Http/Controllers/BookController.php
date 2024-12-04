@@ -93,6 +93,12 @@ class BookController extends Controller
     return view('books.index', compact('books'));
 
 }
+
+public function destroy(Book $book)
+    {
+        $book->delete();
+        return redirect()->route('books.index')->with('success', 'Livro excluído com sucesso.');
+    }
     
 }
 
