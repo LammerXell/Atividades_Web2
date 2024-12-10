@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthorsController;
 use App\Http\Controllers\PublishersController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
@@ -27,3 +28,6 @@ Route::post('/books/create-select', [BookController::class, 'storeWithSelect'])-
 
 // Rotas RESTful para index, show, edit, update, delete (tem que ficar depois das rotas /books/create-id-number e /books/create-select)
 Route::resource('books', BookController::class)->except(['create', 'store']);
+
+// Rotas para a Usuarios
+Route::resource('users', UserController::class)->except(['create', 'store', 'destroy']);
