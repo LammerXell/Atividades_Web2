@@ -41,7 +41,7 @@ class AuthorsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Author $author)
     {
 
         return view('authors.show', compact('author'));
@@ -50,7 +50,7 @@ class AuthorsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Author $author)
     {
         return view('authors.edit', compact('author'));
     }
@@ -58,14 +58,14 @@ class AuthorsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Author $author)
     {
-        $authors = Author::find($id);
+        
 
         $request->validate([
             'name' => 'required|string|unique:authors,name,' . $author->id . '|max:255',
         ]);
-        $authors->update($request->all());
+        $author->update($request->all());
 
         return redirect()->route('authors.index')->with('success', 'Autor atualizado com sucesso.');
     }
@@ -75,7 +75,7 @@ class AuthorsController extends Controller
      */
     public function destroy(Author $author)
     {
-        $authors->delete();
+        $author->delete();
 
         return redirect()->route('authors.index')->with('success', 'Autor excluído com sucesso.');
     }

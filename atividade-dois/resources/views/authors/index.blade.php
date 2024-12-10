@@ -23,23 +23,23 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($authors as $authors)
+            @forelse($authors as $author)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $authors->name }}</td>
+                    <td>{{ $author->name }}</td>
                     <td>
                         <!-- Botão de Visualizar -->
-                        <a href="{{ route('authors.show', $authors) }}" class="btn btn-info btn-sm">
+                        <a href="{{ route('authors.show', $author) }}" class="btn btn-info btn-sm">
                             <i class="bi bi-eye"></i> Visualizar
                         </a>
 
                         <!-- Botão de Editar -->
-                        <a href="{{ route('authors.edit', $authors) }}" class="btn btn-primary btn-sm">
+                        <a href="{{ route('authors.edit', $author) }}" class="btn btn-primary btn-sm">
                             <i class="bi bi-pencil"></i> Editar
                         </a>
 
                         <!-- Botão de Excluir -->
-                        <form action="{{ route('authors.destroy', $authors) }}" method="POST" style="display: inline;">
+                        <form action="{{ route('authors.destroy', $author) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm" onclick="return confirm('Deseja excluir esta categoria?')">
